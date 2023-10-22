@@ -23,4 +23,4 @@ docker-compose --version
 # Print installation status
 echo "Docker and Docker Compose have been installed successfully."
 
-# sudo certbot certonly --standalone -d your_domain
+# sudo certbot certonly --standalone -d kcmohan.info.np -d www.kcmohan.info.np
