@@ -1,0 +1,47 @@
+# FOR BUILD HUB
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+      - ./build:/usr/share/nginx/html
+    networks:
+      - mynetwork
+    depends_on:
+      - fastapi
+    restart: always
+
+  mysql:
+    image: mysql:latest
+    networks:
+      - mynetwork
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=horizon
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p$${MYSQL_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: always
+    
+  fastapi:
+    image: kayceem/fast-api-img:latest
+    networks:
+      - mynetwork
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - .env:/app/.env
+      - ./static/images:/app/app/static/images
+
+
+networks:
+  mynetwork:
