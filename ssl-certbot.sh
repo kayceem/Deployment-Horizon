@@ -14,4 +14,5 @@ sudo certbot certonly --standalone -d $domain -d www.$domain
 
 # Copy SSL certificates
 sudo mkdir -p ./ssl
-sudo cp -a /etc/letsencrypt/live/$domain/. ./ssl
+sudo cp /etc/letsencrypt/live/$domain/fullchain.pem ./ssl/
+sudo cp /etc/letsencrypt/live/$domain/privkey.pem ./ssl/
