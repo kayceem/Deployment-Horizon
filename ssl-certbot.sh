@@ -13,5 +13,5 @@ read -p "Enter your domain name: " domain
 sudo certbot certonly --standalone -d $domain -d www.$domain
 
 # Copy SSL certificates
-sudo mkdir -p /ssl
-sudo cp -a /etc/letsencrypt/live/$domain/. /ssl
+sudo mkdir -p ./ssl
+sudo cp -a /etc/letsencrypt/live/$domain/. ./ssl
